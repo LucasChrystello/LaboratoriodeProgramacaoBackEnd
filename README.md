@@ -88,11 +88,10 @@ Fluxos operacionais das principais funcionalidades:
 
 ## 👥 Autores
 
-- [Seu Nome Aqui]
+- Lucas Chrystêllo
 - [Nome do(s) colega(s) de equipe]
-- Curso: [Nome do curso]
-- Instituição: [Nome da instituição]
+- Curso: Engenharia de Software
+- Instituição: Universidade de Vassouras
 
 ---
 
-> Para mais detalhes, consulte os arquivos na pasta `docs/` deste repositório.
