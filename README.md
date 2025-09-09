@@ -6,13 +6,13 @@ Este repositório contém a documentação técnica do projeto desenvolvido para
 
 ## 📚 Sumário
 
-- [Objetivo do Projeto](#objetivo-do-projeto)
-- [Funcionalidades](#funcionalidades)
-- [Tecnologias Utilizadas](#tecnologias-utilizadas)
-- [Diagramas](#diagramas)
-  - [Diagrama de Entidade-Relacionamento (ER)](#diagrama-de-entidade-relacionamento-er)
-  - [Diagrama de Casos de Uso](#diagrama-de-casos-de-uso)
-  - [Fluxogramas](#fluxogramas)
+-  Objetivo do Projeto
+-  Funcionalidades
+-  Tecnologias Utilizadas
+-  Diagramas
+  -  Diagrama de Entidade-Relacionamento (ER)
+  -  Diagrama de Casos de Uso
+  -  Fluxogramas
 
 ---
 
@@ -89,7 +89,9 @@ Fluxos operacionais das principais funcionalidades:
 ## 👥 Autores
 
 - Lucas Chrystêllo
-- [Nome do(s) colega(s) de equipe]
+- Caique
+- Geuria
+- Felipe Ramos
 - Curso: Engenharia de Software
 - Instituição: Universidade de Vassouras
 
