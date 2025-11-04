@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Sistema de Registro de Pacientes{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <!-- Cabeçalho -->
+    <header>
+        <div class="container">
+            <h1 class="logo">
+                <a href="{% url 'home' %}" style="color: white; text-decoration: none;">
+                    🏥 Registro de Pacientes
+                </a>
+            </h1>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'home' %}">🏠 Início</a></li>
+                    
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'lista_pacientes' %}">👥 Pacientes</a></li>
+                        <li><a href="{% url 'lista_atendimentos' %}">📋 Atendimentos</a></li>
+                        <li><a href="{% url 'relatorios' %}">📊 Relatórios</a></li>
+                        <li>
+                            <span style="color: white; background: rgba(255,255,255,0.2); padding: 0.5rem 1rem; border-radius: 5px;">
+                                👋 Olá, {{ user.username }}
+                            </span>
+                        </li>
+                        <li>
+                            <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" 
+                                        style="background: #dc3545; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer;">
+                                    🚪 Sair
+                                </button>
+                            </form>
+                        </li>
+                    {% else %}
+                        <li><a href="{% url 'login' %}">🔑 Login</a></li>
+                        <li>
+                            <a href="{% url 'register' %}" 
+                               style="background: #84c4bc; color: #045c58; padding: 0.5rem 1rem; border-radius: 5px; text-decoration: none; font-weight: bold;">
+                                📝 Criar Conta
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Rodapé -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Sistema de Registro de Pacientes - UNIVASSOURAS</p>
+        </div>
+    </footer>
+</body>
+</html>

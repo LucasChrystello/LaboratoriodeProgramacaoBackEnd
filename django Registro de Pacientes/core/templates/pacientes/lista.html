@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista de Pacientes{% endblock %}
+
+{% block content %}
+<section class="features">
+    <div class="container">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <h2>Lista de Pacientes</h2>
+            <a href="{% url 'novo_paciente' %}" class="btn" style="background: #0a7870; padding: 0.75rem 1.5rem; font-size: 1.1rem;">
+                ➕ Novo Paciente
+            </a>
+        </div>
+
+        <div class="cards">
+            {% for paciente in pacientes %}
+            <div class="card">
+                <h3>{{ paciente.nome }}</h3>
+                <p><strong>Email:</strong> {{ paciente.email }}</p>
+                <p><strong>Telefone:</strong> {{ paciente.telefone }}</p>
+                <p><strong>Data Nasc.:</strong> {{ paciente.data_nascimento }}</p>
+                <p><strong>Cadastrado em:</strong> {{ paciente.created_at|date:"d/m/Y" }}</p>
+                <div style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <a href="{% url 'editar_paciente' paciente.id %}" 
+                       style="background: #84c4bc; color: #045c58; padding: 0.5rem 1rem; text-decoration: none; border-radius: 5px; display: inline-block;">
+                        ✏️ Editar
+                    </a>
+                    <a href="{% url 'excluir_paciente' paciente.id %}" 
+                       style="background: #dc3545; color: white; padding: 0.5rem 1rem; text-decoration: none; border-radius: 5px; display: inline-block;">
+                        🗑️ Excluir
+                    </a>
+                    <a href="{% url 'novo_atendimento' %}?paciente={{ paciente.id }}" 
+                       style="background: #0a7870; color: white; padding: 0.5rem 1rem; text-decoration: none; border-radius: 5px; display: inline-block;">
+                        🏥 Nova Consulta
+                    </a>
+                </div>
+            </div>
+            {% empty %}
+            <!-- Card especial quando não há pacientes -->
+            <div style="text-align: center; grid-column: 1 / -1;">
+                <div class="card" style="max-width: 600px; margin: 0 auto; background: #e8f4f3; border: 2px dashed #0a7870;">
+                    <h3 style="color: #045c58;">📋 Nenhum paciente cadastrado</h3>
+                    <p style="font-size: 1.1rem; margin: 1rem 0;">Clique no botão abaixo para adicionar o primeiro paciente ao sistema.</p>
+                    <div style="margin-top: 2rem;">
+                        <a href="{% url 'novo_paciente' %}" class="btn" style="background: #0a7870; color: white; padding: 1rem 2rem; font-size: 1.2rem; text-decoration: none; border-radius: 8px; display: inline-block; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+                            🎯 Adicionar Primeiro Paciente
+                        </a>
+                    </div>
+                    <p style="margin-top: 1rem; color: #666; font-size: 0.9rem;">
+                        Você será redirecionado para o formulário de cadastro
+                    </p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Botão adicional no final da lista -->
+        {% if pacientes %}
+        <div style="text-align: center; margin-top: 2rem;">
+            <a href="{% url 'novo_paciente' %}" class="btn" style="background: #0a7870; color: white; padding: 1rem 2rem; font-size: 1.1rem; text-decoration: none; border-radius: 8px; display: inline-block;">
+                ➕ Adicionar Novo Paciente
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

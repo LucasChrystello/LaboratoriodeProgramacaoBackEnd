@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Relatórios{% endblock %}
+
+{% block content %}
+<section class="features">
+    <div class="container">
+        <h2>📊 Relatórios e Estatísticas</h2>
+        
+        <div class="cards">
+            <div class="card">
+                <h3>👥 Total de Pacientes</h3>
+                <p style="font-size: 2rem; color: #0a7870; font-weight: bold; margin: 1rem 0;">{{ total_pacientes }}</p>
+                <p>Pacientes cadastrados no sistema</p>
+            </div>
+            
+            <div class="card">
+                <h3>📋 Relatório de Atendimentos</h3>
+                <p>Relatório completo com todos os atendimentos em formato PDF.</p>
+                <a href="{% url 'relatorio_pdf' %}" style="background: #dc3545; color: white; padding: 0.75rem 1.5rem; text-decoration: none; border-radius: 5px; display: inline-block; margin-top: 1rem; font-weight: bold;">
+                    📄 Gerar PDF
+                </a>
+                <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">
+                    Download automático do relatório
+                </p>
+            </div>
+            
+            <div class="card">
+                <h3>📈 Estatísticas Mensais</h3>
+                <p>Em desenvolvimento - em breve disponível</p>
+                <div style="background: #f8f9fa; padding: 1rem; border-radius: 5px; margin-top: 1rem;">
+                    <p style="margin: 0.5rem 0;">📅 Próximas atualizações:</p>
+                    <ul style="text-align: left; margin: 0.5rem 0;">
+                        <li>Gráficos de atendimentos</li>
+                        <li>Estatísticas por período</li>
+                        <li>Relatórios personalizados</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção de informações -->
+        <div style="background: #e8f4f3; padding: 2rem; border-radius: 10px; margin-top: 2rem; text-align: center;">
+            <h3 style="color: #045c58;">💡 Dica</h3>
+            <p>Use o relatório em PDF para compartilhar informações com a equipe médica ou para arquivamento.</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

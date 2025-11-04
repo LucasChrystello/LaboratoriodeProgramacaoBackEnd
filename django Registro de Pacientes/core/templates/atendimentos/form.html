@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ titulo }}{% endblock %}
+
+{% block content %}
+<section class="features">
+    <div class="container">
+        <h2>{{ titulo }}</h2>
+        
+        {% if messages %}
+        <div style="margin-bottom: 1rem;">
+            {% for message in messages %}
+            <div style="background: {% if message.tags == 'success' %}#d4edda{% else %}#f8d7da{% endif %}; 
+                        color: {% if message.tags == 'success' %}#155724{% else %}#721c24{% endif %}; 
+                        padding: 0.75rem; border-radius: 5px; margin-bottom: 1rem;">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="card" style="max-width: 800px; margin: 0 auto;">
+            {% if paciente_inicial %}
+            <div style="background: #e8f4f3; padding: 1rem; border-radius: 5px; margin-bottom: 1.5rem; border-left: 4px solid #0a7870;">
+                <h4 style="color: #045c58; margin: 0 0 0.5rem 0;">👤 Paciente Selecionado</h4>
+                <p style="margin: 0; font-weight: bold;">{{ paciente_inicial.nome }}</p>
+                <p style="margin: 0; color: #666;">Email: {{ paciente_inicial.email }} | Telefone: {{ paciente_inicial.telefone }}</p>
+            </div>
+            {% endif %}
+
+            <form method="post">
+                {% csrf_token %}
+                
+                {% for field in form %}
+                <div style="margin-bottom: 1.5rem;">
+                    <label for="{{ field.id_for_label }}" style="display: block; margin-bottom: 0.5rem; color: #045c58; font-weight: bold;">
+                        {{ field.label }}
+                        {% if field.field.required %}<span style="color: #dc3545;">*</span>{% endif %}
+                    </label>
+                    
+                    {{ field }}
+                    
+                    {% if field.help_text %}
+                    <div style="color: #6c757d; font-size: 0.875rem; margin-top: 0.25rem;">
+                        {{ field.help_text }}
+                    </div>
+                    {% endif %}
+                    
+                    {% if field.errors %}
+                    <div style="color: #dc3545; font-size: 0.875rem; margin-top: 0.25rem;">
+                        {% for error in field.errors %}
+                        <div>{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+                
+                <div style="display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap;">
+                    <button type="submit" 
+                            style="background: #0a7870; color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 1rem;">
+                        💾 Salvar Consulta
+                    </button>
+                    <a href="{% url 'lista_atendimentos' %}" 
+                       style="background: #6c757d; color: white; padding: 0.75rem 1.5rem; text-decoration: none; border-radius: 5px; display: inline-block;">
+                        ↩️ Voltar para Atendimentos
+                    </a>
+                    <a href="{% url 'lista_pacientes' %}" 
+                       style="background: #84c4bc; color: #045c58; padding: 0.75rem 1.5rem; text-decoration: none; border-radius: 5px; display: inline-block;">
+                        👥 Ver Pacientes
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Estilização dos campos do formulário */
+    input, select, textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+    }
+    
+    input:focus, select:focus, textarea:focus {
+        outline: none;
+        border-color: #0a7870;
+        box-shadow: 0 0 0 2px rgba(10, 120, 112, 0.2);
+    }
+    
+    textarea {
+        min-height: 120px;
+        resize: vertical;
+    }
+</style>
+{% endblock %}

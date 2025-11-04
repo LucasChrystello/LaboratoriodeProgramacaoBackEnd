@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista de Atendimentos{% endblock %}
+
+{% block content %}
+<section class="features">
+    <div class="container">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <h2>📋 Lista de Atendimentos</h2>
+            <a href="{% url 'novo_atendimento' %}" class="btn" style="background: #0a7870; padding: 0.75rem 1.5rem; font-size: 1.1rem;">
+                ➕ Nova Consulta
+            </a>
+        </div>
+
+        {% if messages %}
+        <div style="margin-bottom: 1rem;">
+            {% for message in messages %}
+            <div style="background: {% if message.tags == 'success' %}#d4edda{% else %}#f8d7da{% endif %}; 
+                        color: {% if message.tags == 'success' %}#155724{% else %}#721c24{% endif %}; 
+                        padding: 0.75rem; border-radius: 5px; margin-bottom: 1rem;">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="cards">
+            {% for atendimento in atendimentos %}
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                    <h3 style="margin: 0;">👤 {{ atendimento.paciente.nome }}</h3>
+                    <span style="background: #0a7870; color: white; padding: 0.25rem 0.5rem; border-radius: 15px; font-size: 0.8rem;">
+                        {{ atendimento.data_consulta|date:"d/m/Y" }}
+                    </span>
+                </div>
+                
+                <p><strong>📅 Data e Hora:</strong> {{ atendimento.data_consulta|date:"d/m/Y H:i" }}</p>
+                
+                <div style="margin: 1rem 0;">
+                    <p style="margin: 0.5rem 0;"><strong>🩺 Diagnóstico:</strong></p>
+                    <div style="background: #f8f9fa; padding: 0.75rem; border-radius: 5px; border-left: 3px solid #dc3545;">
+                        {{ atendimento.diagnostico|linebreaks }}
+                    </div>
+                </div>
+                
+                <div style="margin: 1rem 0;">
+                    <p style="margin: 0.5rem 0;"><strong>💊 Prescrição:</strong></p>
+                    <div style="background: #f8f9fa; padding: 0.75rem; border-radius: 5px; border-left: 3px solid #0a7870;">
+                        {{ atendimento.prescricao|linebreaks }}
+                    </div>
+                </div>
+
+                <div style="margin-top: 1.5rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <a href="{% url 'editar_atendimento' atendimento.id %}" 
+                       style="background: #84c4bc; color: #045c58; padding: 0.5rem 1rem; text-decoration: none; border-radius: 5px; display: inline-block;">
+                        ✏️ Editar
+                    </a>
+                    <a href="{% url 'excluir_atendimento' atendimento.id %}" 
+                       style="background: #dc3545; color: white; padding: 0.5rem 1rem; text-decoration: none; border-radius: 5px; display: inline-block;">
+                        🗑️ Excluir
+                    </a>
+                    <a href="{% url 'novo_atendimento' %}?paciente={{ atendimento.paciente.id }}" 
+                       style="background: #0a7870; color: white; padding: 0.5rem 1rem; text-decoration: none; border-radius: 5px; display: inline-block;">
+                        🏥 Nova Consulta
+                    </a>
+                </div>
+            </div>
+            {% empty %}
+            <!-- Card especial quando não há atendimentos -->
+            <div style="text-align: center; grid-column: 1 / -1;">
+                <div class="card" style="max-width: 600px; margin: 0 auto; background: #e8f4f3; border: 2px dashed #0a7870;">
+                    <h3 style="color: #045c58;">📋 Nenhum atendimento registrado</h3>
+                    <p style="font-size: 1.1rem; margin: 1rem 0;">Clique no botão abaixo para registrar o primeiro atendimento no sistema.</p>
+                    <div style="margin-top: 2rem;">
+                        <a href="{% url 'novo_atendimento' %}" class="btn" style="background: #0a7870; color: white; padding: 1rem 2rem; font-size: 1.2rem; text-decoration: none; border-radius: 8px; display: inline-block; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+                            🎯 Registrar Primeira Consulta
+                        </a>
+                    </div>
+                    <p style="margin-top: 1rem; color: #666; font-size: 0.9rem;">
+                        Ou <a href="{% url 'lista_pacientes' %}" style="color: #0a7870; font-weight: bold;">acesse a lista de pacientes</a> para criar uma consulta específica
+                    </p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Botão adicional no final da lista -->
+        {% if atendimentos %}
+        <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #ddd;">
+            <a href="{% url 'novo_atendimento' %}" class="btn" style="background: #0a7870; color: white; padding: 1rem 2rem; font-size: 1.1rem; text-decoration: none; border-radius: 8px; display: inline-block;">
+                ➕ Adicionar Nova Consulta
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

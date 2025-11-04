@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block title %}Criar Conta - Sistema de Pacientes{% endblock %}
+
+{% block content %}
+<section class="features">
+    <div class="container">
+        <div style="max-width: 600px; margin: 0 auto; background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+            <h2 style="text-align: center; color: #045c58; margin-bottom: 1.5rem;">Criar Nova Conta</h2>
+            
+            {% if messages %}
+                {% for message in messages %}
+                    <div style="background: #d4edda; color: #155724; padding: 0.75rem; border-radius: 5px; margin-bottom: 1rem;">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <!-- Card de informações sobre matrículas (sem mostrar os números) -->
+            <div style="background: #e8f4f3; padding: 1rem; border-radius: 5px; margin-bottom: 1.5rem; border-left: 4px solid #0a7870;">
+                <h4 style="color: #045c58; margin: 0 0 0.5rem 0;">🔒 Sistema de Matrículas</h4>
+                <p style="margin: 0 0 0.5rem 0;">
+                    Para criar uma conta de atendente/médico, você precisa de uma matrícula válida fornecida pela administração.
+                </p>
+                <p style="margin: 0; font-weight: bold;">
+                    Status: 
+                    {% if matriculas_disponiveis %}
+                        <span style="color: #0a7870;">✅ Matrículas disponíveis</span>
+                    {% else %}
+                        <span style="color: #dc3545;">❌ Nenhuma matrícula disponível</span>
+                    {% endif %}
+                </p>
+            </div>
+
+            <form method="post">
+                {% csrf_token %}
+                
+                {% for field in form %}
+                <div style="margin-bottom: 1rem;">
+                    <label for="{{ field.id_for_label }}" style="display: block; margin-bottom: 0.5rem; color: #045c58; font-weight: bold;">
+                        {{ field.label }}
+                        {% if field.field.required %}<span style="color: #dc3545;">*</span>{% endif %}
+                    </label>
+                    
+                    {% if field.name == 'matricula' %}
+                        <input type="text" name="{{ field.name }}" id="{{ field.id_for_label }}" 
+                               value="{{ field.value|default:'' }}" required
+                               style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px;"
+                               placeholder="Digite a matrícula fornecida pela administração">
+                    {% else %}
+                        {{ field }}
+                    {% endif %}
+                    
+                    {% if field.errors %}
+                    <div style="color: #dc3545; font-size: 0.875rem; margin-top: 0.25rem;">
+                        {% for error in field.errors %}
+                        <div>{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    
+                    {% if field.help_text %}
+                    <div style="color: #6c757d; font-size: 0.875rem; margin-top: 0.25rem;">
+                        {{ field.help_text }}
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+                
+                <button type="submit" 
+                        style="width: 100%; background: #0a7870; color: white; padding: 0.75rem; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 1rem;"
+                        {% if not matriculas_disponiveis %}disabled{% endif %}>
+                    {% if matriculas_disponiveis %}
+                        ✅ Criar Conta de Atendente
+                    {% else %}
+                        ❌ Matrículas Indisponíveis
+                    {% endif %}
+                </button>
+            </form>
+            
+            <div style="text-align: center; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #dee2e6;">
+                <p style="color: #6c757d;">Já tem uma conta?</p>
+                <a href="{% url 'login' %}" style="color: #0a7870; font-weight: bold;">Faça login aqui</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    input, select {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+    }
+    
+    input:focus, select:focus {
+        outline: none;
+        border-color: #0a7870;
+        box-shadow: 0 0 0 2px rgba(10, 120, 112, 0.2);
+    }
+</style>
+{% endblock %}

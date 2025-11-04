@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Seção de destaque -->
+<section class="hero">
+    <div class="hero-content">
+        <h2>Organize e gerencie seus pacientes com facilidade</h2>
+        <p>Um sistema simples, seguro e eficiente para clínicas, hospitais e consultórios.</p>
+        {% if user.is_authenticated %}
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="{% url 'lista_pacientes' %}" class="btn">👥 Gerenciar Pacientes</a>
+                <a href="{% url 'lista_atendimentos' %}" class="btn" style="background: #84c4bc; color: #045c58;">📋 Ver Atendimentos</a>
+                <a href="{% url 'relatorios' %}" class="btn" style="background: #045c58; color: white;">📊 Relatórios</a>
+            </div>
+        {% else %}
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="{% url 'login' %}" class="btn">🔑 Fazer Login</a>
+                <a href="{% url 'register' %}" class="btn" style="background: #84c4bc; color: #045c58;">📝 Criar Conta</a>
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Funcionalidades -->
+<section class="features">
+    <div class="container">
+        <h2>Funcionalidades do Sistema</h2>
+        <div class="cards">
+            <div class="card">
+                <h3>👥 Cadastro de Pacientes</h3>
+                <p>Inclua, edite e exclua informações pessoais e histórico de saúde.</p>
+                {% if user.is_authenticated %}
+                <a href="{% url 'lista_pacientes' %}" style="background: #0a7870; color: white; padding: 0.5rem 1rem; text-decoration: none; border-radius: 5px; display: inline-block; margin-top: 1rem;">
+                    Gerenciar Pacientes
+                </a>
+                {% endif %}
+            </div>
+            <div class="card">
+                <h3>📋 Controle de Atendimentos</h3>
+                <p>Registro completo de consultas, diagnósticos e prescrições médicas.</p>
+                {% if user.is_authenticated %}
+                <a href="{% url 'lista_atendimentos' %}" style="background: #0a7870; color: white; padding: 0.5rem 1rem; text-decoration: none; border-radius: 5px; display: inline-block; margin-top: 1rem;">
+                    Ver Atendimentos
+                </a>
+                {% endif %}
+            </div>
+            <div class="card">
+                <h3>📊 Relatórios Avançados</h3>
+                <p>Geração de relatórios em PDF e estatísticas detalhadas.</p>
+                {% if user.is_authenticated %}
+                <a href="{% url 'relatorios' %}" style="background: #0a7870; color: white; padding: 0.5rem 1rem; text-decoration: none; border-radius: 5px; display: inline-block; margin-top: 1rem;">
+                    Ver Relatórios
+                </a>
+                {% endif %}
+            </div>
+            <div class="card">
+                <h3>👨‍💼 Controle de Usuários</h3>
+                <p>Níveis de acesso para administradores, médicos e equipe de apoio.</p>
+            </div>
+            <div class="card">
+                <h3>🔒 Segurança</h3>
+                <p>Sistema de autenticação com criação de conta e senhas criptografadas.</p>
+                {% if not user.is_authenticated %}
+                <a href="{% url 'register' %}" style="background: #0a7870; color: white; padding: 0.5rem 1rem; text-decoration: none; border-radius: 5px; display: inline-block; margin-top: 1rem;">
+                    Criar Minha Conta
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
